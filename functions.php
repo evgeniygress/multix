@@ -184,28 +184,7 @@
 				'hierarchical'          => false,
 				'rewrite'               => true,
 			) );
-		register_taxonomy('price', array('price'), array(
-			'label'                 => '', // определяется параметром $labels->name
-			'labels'                => array(
-				'name'              => 'price category',
-				'singular_name'     => 'category',
-				'search_items'      => 'Search category',
-				'all_items'         => 'All category',
-				'view_item '        => 'View category',
-				'parent_item'       => 'Parent category',
-				'parent_item_colon' => 'Parent category:',
-				'edit_item'         => 'Edit category',
-				'update_item'       => 'Update category',
-				'add_new_item'      => 'Add New category',
-				'new_item_name'     => 'New category Name',
-				'menu_name'         => 'category',
-			),
-				'description'           => '', // описание таксономии
-				'public'                => true,
-				'publicly_queryable'    => null, // равен аргументу public
-				'hierarchical'          => false,
-				'rewrite'               => true,
-			) );
+
 	}
 
 	

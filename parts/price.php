@@ -26,45 +26,10 @@ Template Post Type: price
 						<!-- START PRICING TABLES TABS -->
 						<div class="pricing-tabs">
 							<ul class="price-tabs" role="tablist">
-
-							<?php
-								$terms = get_terms( array(
-									'taxonomy'      => array( 'price', 'price' ), // название таксономии с WP 4.5
-									'orderby'       => 'id', 
-									'order'         => 'ASC',
-									'name'          => '',    // str/arr поле name для получения термина по нему. C 4.2.
-								) );
-
-
-								foreach( $terms as $term ){
-									?>
-									
-
-								<li role="presentation">
-							    	<a href="<?php print_r($term->slug); ?>" aria-controls="<?php print_r($term->name); ?>" role="tab" data-toggle="tab">
-							    		<?php print_r($term->name); ?>
-							    	</a>
-								</li>
-                                <?php
-								}
-                                ?>
-							</ul>
-						</div>
-						<!-- END PRICING TABLES TABS -->
-
-					</div>
-					<!-- END PRICE TITLE -->
-
-
-					<!-- START PRICING TABLES -->
-					<div class="pric-tables col-md-8">
-					
-						<!-- START PRICING TABLES CONTENT -->
-						<div class="tab-content">
 						<?php
 
 						$posts = get_posts(array(
-							'numberposts' => 3,
+							'numberposts' => 0,
 							'post_type' => 'price',
 							'order'       => 'ASC',
 							'suppress_filters' => true,
@@ -83,10 +48,67 @@ Template Post Type: price
 
 									    while( have_rows('price') ) : the_row();
 									    	?>
+											<li role="presentation">
+										    	<a href="<?php the_sub_field('price-btn'); ?>" aria-controls="<?php the_sub_field('price-btn'); ?>" role="tab" data-toggle="tab">
+										    		<?php the_sub_field('price-btn'); ?>
+										    	</a>
+											</li>	
+											
+											<?php		
+											
+									    endwhile;
+
+									endif;
+									// end parent loop
+
+									?>	
+						   <?php
+						}
+
+						wp_reset_postdata();
+
+						?>
+							
+
+							</ul>
+						</div>
+						<!-- END PRICING TABLES TABS -->
+
+					</div>
+					<!-- END PRICE TITLE -->
 
 
+					<!-- START PRICING TABLES -->
+					<div class="pric-tables col-md-8">
+					
+						<!-- START PRICING TABLES CONTENT -->
+						<div class="tab-content">
+						<?php
+
+						$posts = get_posts(array(
+							'numberposts' => 0,
+							'post_type' => 'price',
+							'order'       => 'ASC',
+							'suppress_filters' => true,
+						));
+						foreach( $posts as $post ){
+							setup_postdata($post); ?>
+							
+								<?php 
+
+									$post_categories = get_the_terms( $post->ID, 'price' );
+									if ( ! empty( $post_categories ) && ! is_wp_error( $post_categories ) ) {
+									    $categories = wp_list_pluck( $post_categories, 'slug' );
+									}
+									// parent loop
+									if( have_rows('price') ):
+
+									    while( have_rows('price') ) : the_row();
+									    	$category = get_sub_field('price-btn');
+									    	?>
+												
 											<!-- START PERSONAL PRICING TABLES -->
-											<div role="tabpanel" class="tab-pane fade" id="<?php print_r($categories[0]); ?>">	
+											<div role="tabpanel" class="tab-pane fade" id="<?php print_r($category); ?>">	
 												<?php 
 													
 												// child loop
